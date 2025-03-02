@@ -8,6 +8,7 @@ import winsound     # Beep音
 url = 'https://www.playthroneandliberty.com/ja-jp/support/server-status'
 server_name = 'Valkarg'
 sleep_time = 20
+beep_duration = 400
 msg_title = 'ThroneAndLiberty_ServerStatusCheck'
 item = ''
 
@@ -41,9 +42,9 @@ def main():
 
         # ビープ音を鳴らす　３回音程変えて鳴らす
         #winsound.Beep(frequency, duration)
-        winsound.Beep(2500, 500)
-        winsound.Beep(3000, 500)
-        winsound.Beep(4000, 500)
+        winsound.Beep(2500, beep_duration)
+        winsound.Beep(3000, beep_duration)
+        winsound.Beep(4000, beep_duration)
 
         # MsgBox表示
         user32 = windll.user32
