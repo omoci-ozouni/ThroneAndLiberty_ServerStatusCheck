@@ -1,59 +1,49 @@
 import requests
 from bs4 import BeautifulSoup
-from ctypes import *    # MsgBox
-import time         # Sleep
-import datetime     # 現在日時取得
-import winsound     # Beep音
+import time
+import winsound
+from ctypes import windll
 
-url = 'https://www.playthroneandliberty.com/ja-jp/support/server-status'
-server_name = 'Sunstorm'
-sleep_time = 20
-beep_duration = 400
-msg_title = 'ThroneAndLiberty_ServerStatusCheck'
-item = ''
+URL = 'https://www.playthroneandliberty.com/ja-jp/support/server-status'
+SERVER_NAME = 'Sunstorm'
+SLEEP_TIME = 20
+BEEP_DURATION = 400
+MSG_TITLE = 'ThroneAndLiberty_ServerStatusCheck'
+
+def get_server_status():
+    """ サーバーステータスを取得 """
+    try:
+        response = requests.get(URL, timeout=6)
+        soup = BeautifulSoup(response.text, "html.parser")
+        server_span = soup.find("span", string=SERVER_NAME)  # 修正: text → string
+        return server_span.get("aria-label") if server_span else None
+    except requests.exceptions.RequestException as e:
+        print(f"Network error: {e}")
+        return None
 
 def main():
     try:
         while True:
-            # HTMLの取得(GET)
-            req = requests.get(url, timeout=6.0)
-            req.encoding = req.apparent_encoding # 日本語の文字化け防止
+            server_status = get_server_status()
+            current_time = time.strftime("%Y-%m-%d %H:%M:%S")
+            print(f"[{current_time}] Server status: {server_status}")
 
-            # HTMLの解析
-            bsObj = BeautifulSoup(req.text,"html.parser")
+            if server_status and not server_status.endswith("Maintenance"):
+                break  # メンテナンス終了時にループを抜ける
+            
+            time.sleep(SLEEP_TIME)
 
-            # 要素の抽出
-            spans = bsObj.find_all("span")
-            for span in spans:
-                #print(span.get_text())
-                if span.get_text() == server_name:
-                    item = span.get("aria-label")
-                    break
+        # ビープ音 3回
+        for freq in [2500, 3000, 4000]:
+            winsound.Beep(freq, BEEP_DURATION)
 
-            #現在日時出力
-            dt_now = datetime.datetime.now()
-            print(dt_now)
+        # メッセージボックス表示
+        windll.user32.MessageBoxW(0, server_status, MSG_TITLE, 0x40)
 
-            print(item)
-            #　右から１１文字で判別
-            if item[-11:] != 'Maintenance':  # 取り出した要素が偽と見なされる値（空文字列など）であれば 
-                break  # 無限ループを終了
-            time.sleep(sleep_time)  # 20秒間スリープ
-
-        # ビープ音を鳴らす　３回音程変えて鳴らす
-        #winsound.Beep(frequency, duration)
-        winsound.Beep(2500, beep_duration)
-        winsound.Beep(3000, beep_duration)
-        winsound.Beep(4000, beep_duration)
-
-        # MsgBox表示
-        user32 = windll.user32
-        user32.MessageBoxW(0, item,msg_title, 0x00000000|0x00000040)
-
+    except KeyboardInterrupt:
+        print("\nProcess interrupted by user.")
     except Exception as e:
-        print(f"An error occurred: {e}")
-        input("Press Enter to close the program...")
+        print(f"Unexpected error: {e}")
 
-#モジュール呼出時の実行防止
 if __name__ == '__main__':
     main()
