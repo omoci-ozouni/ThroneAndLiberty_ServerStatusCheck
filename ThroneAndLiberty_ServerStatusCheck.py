@@ -6,7 +6,7 @@ import datetime     # 現在日時取得
 import winsound     # Beep音
 
 url = 'https://www.playthroneandliberty.com/ja-jp/support/server-status'
-server_name = 'Valkarg'
+server_name = 'Sunstorm'
 sleep_time = 20
 beep_duration = 400
 msg_title = 'ThroneAndLiberty_ServerStatusCheck'

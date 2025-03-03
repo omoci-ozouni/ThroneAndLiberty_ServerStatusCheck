@@ -25,5 +25,5 @@ pip install pyinstaller
 
 2. コマンドプロンプトで作業フォルダに移動し下記を実行
 ~~~ windows shell
-pyinstaller ThroneAndLiberty_ServerStatusCheck.py
+pyinstaller ThroneAndLiberty_ServerStatusCheck.py --onefile
 ~~~
