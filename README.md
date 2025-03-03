@@ -10,14 +10,17 @@ https://www.playthroneandliberty.com/ja-jp/support/server-status
 - メンテナンス状態でない場合は、BEEP音3回鳴らしてMsgBox表示して終了します。
 
 # 実行方法
-Windowsで<br>
-`dist/ThroneAndLiberty_ServerStatusCheck/ThroneAndLiberty_ServerStatusCheck.exe`<br>
-を実行してください。<br>
+Windowsで実行できます<br>
+Releasesから最新のexeをダウンロードしてください。<br>
+https://github.com/omoci-ozouni/ThroneAndLiberty_ServerStatusCheck/releases/tag/Prod
+
+セキュリティのアラートが出ると思いますので、事前にexeファイルを右クリックしてプロパティを開いて一番したにあるセキュリティ欄のチェックを付けてから実行してください。
+
 Python実行環境があれば<br>
 `ThroneAndLiberty_ServerStatusCheck.py`<br>
 を実行でも大丈夫です。<br>
 
-# exe作成方法
+# exe作成方法備忘
 1. pyinstallerをインストール
 ~~~ windows shell
 pip install pyinstaller
