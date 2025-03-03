@@ -15,6 +15,7 @@ Releasesから最新のexeをダウンロードしてください。<br>
 https://github.com/omoci-ozouni/ThroneAndLiberty_ServerStatusCheck/releases/tag/Prod
 
 セキュリティのアラートが出ると思いますので、事前にexeファイルを右クリックしてプロパティを開いて一番したにあるセキュリティ欄のチェックを付けてから実行してください。
+![alt text](image-1.png)
 
 Python実行環境があれば<br>
 `ThroneAndLiberty_ServerStatusCheck.py`<br>
